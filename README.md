@@ -1,4 +1,4 @@
-Bio Media Art Workshop 2013 (BMAW13)
+Bio Media Art Workshop (BMAW)
 ===========
 
 Bio Media Art Workshop(BMAW)では、Processing および Arduino とそれらを組み合せて、センサーで環境の情報を計測したり、音や光、動きで 環境に働きかける方法を学び、植物と電子工作、プログラミングやネットワークを組み合せたバイオ・ガジェットを制作します。作成したバイオ・ガジェットはTwitterやFacebookなどのSNSや、xivelyなどの計測データの共有サービスを利用して、積極的に世界中とシェアすることを目指します。
