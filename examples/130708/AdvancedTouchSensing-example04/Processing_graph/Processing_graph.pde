@@ -20,9 +20,6 @@ void setup() {
   PortSelected=5; 
   //シリアルポートを初期化
   SerialPortSetup();
-
-  //記録した最大値の値を初期化
-  recVoltageMax = recTimeMax = 0;
 }
 
 void draw() {
@@ -40,38 +37,41 @@ void draw() {
       }
     }
     //画面に描画するために、(x, y)座標の値を画面の大きさにあわせて変換
-    float x = map(timeMax, 0, 159, graphMargin, width-graphMargin);
-    float y = map(voltageMax, yMin, yMax, height-graphMargin, graphMargin); 
-    float rx = map(recTimeMax, 0, 159, graphMargin, width-graphMargin);
-    float ry = map(recVoltageMax, yMin, yMax, height-graphMargin, graphMargin);
+    float x = map(timeMax, 0, 159, 0, width);
+    float y = map(voltageMax, yMin, yMax, height, 0); 
+    float rx = map(recTimeMax, 0, 159, 0, width);
+    float ry = map(recVoltageMax, yMin, yMax, height, 0);
+    float diffX = x - rx;
+    float diffY = y - ry;
+    float dist = dist(x, y, rx, ry);
+    float rot = map(diffX, 0, width, 0, PI*2);
+    float col = map(dist, 0, width, 0, 180);
 
-    //枠線を描く
-    noFill();
+    pushMatrix();
+    translate(width/2, height/2);
+    rotate(rot);
+
+    //現在の最大値と、記録した最大値の距離で円を描く
+    fill(255, 0, 0, col);
     stroke(127);
-    rect(graphMargin, graphMargin, width - graphMargin * 2, height - graphMargin * 2);
-
-    //現在の最大値の座標を交差する線で描く
-    stroke(80);
-    line(x, graphMargin, x, height-graphMargin);
-    line(graphMargin, y, width-graphMargin, y);
-
-    //現在のそれぞれの最大値を文字で表示
-    fill(#3399ff);
-    noStroke();
-    text(timeMax, x+2, height-graphMargin-2);
-    text(voltageMax, graphMargin, y-10);
+    ellipse(0, 0, dist, dist);
 
     //現在の最大値と、記録した最大値の間に線を描く
     stroke(255);
-    line(x, y, rx, ry);
+    line(0, 0, dist/2, 0);
+
     //記録しておいた最大値の場所に円を描く
-    ellipse(rx, ry, 20, 20);
+    noStroke();
+    fill(#3399ff);
+    ellipse(0, 0, 10, 10);
+
     //現在の最大値の場所に円を描く
-    ellipse(x, y, 20, 20);
+    ellipse(dist/2, 0, 10, 10);
+    popMatrix();
 
     //現在の最大値と記録した最大値との距離を算出してテキストで表示
-    float dist = dist(x, y, rx, ry);
-    text("dist = "+dist, rx + 12, ry);
+    fill(255);
+    text("dist = "+dist, 20, 20);
   }
 }
 
