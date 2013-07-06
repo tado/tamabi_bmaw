@@ -15,7 +15,6 @@ float graphMargin = 20; //グラフと画面の余白
 void setup() {
   //画面サイズ
   size(800, 600); 
-  noLoop();
   //ポートを設定
   PortSelected=5; 
   //シリアルポートを初期化

@@ -15,7 +15,6 @@ float graphMargin = 20; //グラフと画面の余白
 void setup() {
   //画面サイズ
   size(800, 600); 
-  noLoop();
   //ポートを設定
   PortSelected=5; 
   //シリアルポートを初期化
@@ -65,6 +64,7 @@ void draw() {
     stroke(255);
     line(x, y, rx, ry);
     //記録しておいた最大値の場所に円を描く
+    noStroke();
     ellipse(rx, ry, 20, 20);
     //現在の最大値の場所に円を描く
     ellipse(x, y, 20, 20);

@@ -9,8 +9,7 @@ float timeMax; //電圧が最大値だったときの時間
 
 void setup() {
   //画面サイズ
-  size(800, 600); 
-  noLoop();
+  size(800, 600);
   //ポートを設定
   PortSelected=5; 
   //シリアルポートを初期化
