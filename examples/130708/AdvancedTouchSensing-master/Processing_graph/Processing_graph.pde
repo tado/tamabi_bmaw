@@ -40,7 +40,7 @@ void draw() {
    if ( DataRecieved3 ) {
     pushMatrix();
     pushStyle();
-    MyArduinoGraph.yMax=100;      
+    MyArduinoGraph.yMax=1000;      
     MyArduinoGraph.yMin=-10;      
     MyArduinoGraph.xMax=int (max(Time3));
     MyArduinoGraph.DrawAxis();    
