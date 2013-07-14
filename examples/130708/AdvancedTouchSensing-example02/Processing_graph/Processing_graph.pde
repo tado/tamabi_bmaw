@@ -14,7 +14,7 @@ void setup() {
   //画面サイズ
   size(800, 600); 
   //ポートを設定
-  PortSelected=5; 
+  PortSelected=0; 
   //シリアルポートを初期化
   SerialPortSetup();
 }
