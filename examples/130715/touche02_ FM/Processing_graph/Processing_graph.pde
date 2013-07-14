@@ -1,11 +1,11 @@
 /*
  * Touche for Arduino
- * Touche Theremin
+ * Touche FM Theremin
  *
  */
 
 import ddf.minim.*;
-import ddf.minim.signals.*;
+import ddf.minim.ugens.*;
 
 float recVoltageMax;
 float recTimeMax;
@@ -17,7 +17,7 @@ float graphMargin = 20; //グラフと画面の余白
 
 Minim minim;
 AudioOutput out;
-SineWave sine;
+Oscil fm;
 
 void setup() {
   //画面サイズ
@@ -27,11 +27,20 @@ void setup() {
   //シリアルポートを初期化
   SerialPortSetup();
 
-  minim = new Minim(this);
-  out = minim.getLineOut();
-  sine = new SineWave(440, 1.0, out.sampleRate());
-  sine.portamento(200);
-  out.addSignal(sine);
+  // Minimクラスのインスタンス化(初期化)
+  minim = new Minim( this );
+  // 出力先を生成
+  out   = minim.getLineOut();
+  // モジュレータ用のオシレーター
+  Oscil wave = new Oscil( 200, 0.8, Waves.SINE );
+  // キャリア用のオスレータを生成
+  fm = new Oscil( 10, 2, Waves.SINE );
+  // モジュレータの値の最小値を100Hzに
+  fm.offset.setLastValue( 100 );
+  // キャリアの周波数にモジュレータを設定( = 周波数変調)
+  fm.patch( wave.frequency );
+  // and patch wave to the output
+  wave.patch( out );
 }
 
 void draw() {
@@ -58,10 +67,11 @@ void draw() {
     //現在の最大値と記録した最大値との距離を算出してテキストで表示
     fill(255);
     text("dist = "+dist, 20, 20);
+    float modulateAmount = map( dist, 0, 1000, 0, 1000 );
+    float modulateFrequency = map( timeMax, 0, 159, 0.1, 100 );
 
-    // Sin波の周波数をセンサーの値の距離に対応させる
-    float freq = map(dist, 0, 1000, 20, 1000);
-    sine.setFreq(freq);
+    fm.frequency.setLastValue( modulateFrequency );
+    fm.amplitude.setLastValue( modulateAmount );
   }
 
   //波形を表示
