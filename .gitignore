@@ -13,3 +13,6 @@ Icon
 
 # ingore resorce folder
 resorces/
+
+# processing build tmp
+build-tmp/
