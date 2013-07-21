@@ -65,7 +65,7 @@ class Graph
     strokeWeight(1);
     int t=60;
 
-    rect(xPos-t*1.6, yPos-t, Width+t*2.5, Height+t*2);            // outline
+    //rect(xPos-t*1.6, yPos-t, Width+t*2.5, Height+t*2);            // outline
     textAlign(CENTER);
     textSize(18);
     float c=textWidth(Title);
