@@ -4,7 +4,7 @@ import ddf.minim.*;
 Minim minim;
 AudioPlayer[] player = new AudioPlayer[4];
 
-Graph MyArduinoGraph = new Graph(150, 80, 500, 300, color (20, 20, 200));
+Graph MyArduinoGraph = new Graph(150, 80, 500, 300, color(31,127,255));
 float[] gestureOne=null;
 float[] gestureTwo = null;
 float[] gestureThree = null;
@@ -18,7 +18,7 @@ void setup() {
   //!!!!!!!!!!!!!!!!!!!!!!!!!!
   // ポート番号を必ず指定すること
   //!!!!!!!!!!!!!!!!!!!!!!!!!!
-  PortSelected=1;
+  PortSelected=4;
 
   size(1000, 500);
 
@@ -37,6 +37,7 @@ void setup() {
   player[1] = minim.loadFile("cello-f2.aif");
   player[2] = minim.loadFile("cherokee.aif");
   player[3] = minim.loadFile("drumLoop.aif");
+  //それぞれのプレーヤーをループ再生しミュートしておく
   for(int i = 0; i < player.length; i++){
     player[i].loop();
     player[i].mute();
@@ -46,9 +47,7 @@ void setup() {
 void draw() {
   background(255);
 
-  /* ====================================================================
-   グラフ描画
-   ====================================================================  */
+   //グラフ描画
    if ( DataRecieved3 ) {
     pushMatrix();
     pushStyle();
@@ -64,7 +63,7 @@ void draw() {
     float gestureTwoDiff =0;
     float gestureThreeDiff =0;
 
-    //Gesture compare
+    //ジェスチャーの比較
     float totalDist = 0;
     int currentMax = 0;
     float currentMaxValue = -1;
@@ -79,7 +78,7 @@ void draw() {
         fill(255, 255, 255);
       }
 
-      //calucalte individual dist
+      //それぞれのジェスチャーからの距離を算出
       gestureDist[i] = dist(Time3[MyArduinoGraph.maxI], Voltage3[MyArduinoGraph.maxI], gesturePoints[i][0], gesturePoints[i][1]);
       totalDist = totalDist + gestureDist[i];
       if (gestureDist[i] < currentMaxValue || i == 0) {
@@ -95,10 +94,15 @@ void draw() {
       if (currentMax == i) {
         fill(0, 0, 0);
         fill(currentAmmount*255.0f, 0, 0);
-        for(int n = 0; n < player.length; n++){
-          player[n].mute();
+
+        //いったん全てのプレーヤーをミュート
+        for(int j = 0; j < player.length; j++){
+          player[j].mute();
         }
+
+        //該当するプレーヤーのみミュートを解除
         player[i].unmute();
+
       }
       else {
         fill(255, 255, 255);

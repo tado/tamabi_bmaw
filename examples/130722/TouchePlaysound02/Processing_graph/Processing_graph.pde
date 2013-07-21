@@ -19,7 +19,7 @@ void setup() {
   //!!!!!!!!!!!!!!!!!!!!!!!!!!
   // ポート番号を必ず指定すること
   //!!!!!!!!!!!!!!!!!!!!!!!!!!
-  PortSelected=0;
+  PortSelected=4;
 
   size(1024, 768);
   MyArduinoGraph = new Graph(int(width*0.1), int(height*0.1), int(width/3*2-width*0.1), int(height/2-height*0.1), color(#3399ff));
@@ -49,9 +49,8 @@ void setup() {
 void draw() {
   background(255);
 
-  /* ====================================================================
-   グラフ描画
-   ====================================================================  */
+   //グラフ描画
+  
    if ( DataRecieved3 ) {
     pushMatrix();
     pushStyle();
@@ -72,7 +71,7 @@ void draw() {
     int currentMax = 0;
     float currentMaxValue = -1;
     for (int i = 0; i < 4;i++) {
-      //  gesturePoints[i][0] = 
+      
       if (mousePressed && mouseX > width/4*3 && mouseX<width && mouseY > 100*i && mouseY < 100*(i+1)) {
         fill(255, 0, 0);
         gesturePoints[i][0] = Time3[MyArduinoGraph.maxI];
@@ -82,7 +81,7 @@ void draw() {
         fill(255, 255, 255);
       }
 
-      //calucalte individual dist
+      //それぞれのジェスチャーの距離を算出
       gestureDist[i] = dist(Time3[MyArduinoGraph.maxI], Voltage3[MyArduinoGraph.maxI], gesturePoints[i][0], gesturePoints[i][1]);
       totalDist = totalDist + gestureDist[i];
       if (gestureDist[i] < currentMaxValue || i == 0) {
@@ -95,11 +94,17 @@ void draw() {
     for (int i = 0; i < 4;i++) {
       float currentAmmount = 0;
       currentAmmount = 1-gestureDist[i]/totalDist;
+      
+      //全てのプレイヤーの音量を一旦下げる
       player[i].setGain(-120);
+      
       if (currentMax == i) {
         fill(0, 0, 0);
         fill(31, 127, 255, currentAmmount*255.0f);
+
+        //ジェスチャーとの距離に応じて音量(Gain)を算出
         float val = map(currentAmmount, 0, 1, -48, 0);
+        //計算した音量を適用
         player[i].setGain(val);
       }
       else {
@@ -107,7 +112,7 @@ void draw() {
       }
 
       stroke(0, 0, 0);
-      //rect(750, 100 * (i+1), 50, 50);
+
       rect(width/4*3, 100* i + 10, width/4-10, 90);
       fill(0, 0, 0);
       textSize(20);
