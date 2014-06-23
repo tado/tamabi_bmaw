@@ -46,7 +46,7 @@ void SerialPortSetup() {
   portName= Serial.list()[PortSelected];
   //println( Serial.list());
   ArrayOfPorts=Serial.list();
-  println(ArrayOfPorts);
+  printArray(ArrayOfPorts);
   myPort = new Serial(this, portName, 115200);
   delay(50);
   myPort.clear();
