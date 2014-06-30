@@ -19,7 +19,7 @@ void setup() {
   //!!!!!!!!!!!!!!!!!!!!!!!!!!
   // ポート番号を必ず指定すること
   //!!!!!!!!!!!!!!!!!!!!!!!!!!
-  PortSelected=4;
+  PortSelected=2;
 
   size(1024, 768);
   MyArduinoGraph = new Graph(int(width*0.1), int(height*0.1), int(width/3*2-width*0.1), int(height/2-height*0.1), color(#3399ff));
