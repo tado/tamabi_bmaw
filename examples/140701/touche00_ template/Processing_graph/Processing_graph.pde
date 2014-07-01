@@ -35,12 +35,8 @@ void draw() {
         timeMax = Time3[i];
       }
     }
-    //画面に描画するために、(x, y)座標の値を画面の大きさにあわせて変換
-    float x = map(timeMax, 0, 159, 0, width);
-    float y = map(voltageMax, yMin, yMax, height, 0); 
-    float rx = map(recTimeMax, 0, 159, 0, width);
-    float ry = map(recVoltageMax, yMin, yMax, height, 0);
-    float dist = dist(x, y, rx, ry);
+    // 記録した電圧のピークとその時間と、現在の電圧のピークとの距離をはかる
+    float dist = dist(timeMax, voltageMax, recTimeMax, recVoltageMax);
 
     //現在の最大値と記録した最大値との距離を算出してテキストで表示
     fill(255);
